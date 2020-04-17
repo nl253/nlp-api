@@ -1,69 +1,86 @@
-const {promises: fs} = require('fs');
-const {join} = require('path');
+const AWS = require('aws-sdk');
+const dynamoDB = new AWS.DynamoDB();
 
-const definitions = require('./dict.json');
+/**
+ * @param {string} s1
+ * @param {string} s2
+ * @return {number}
+ */
+const cmp = (s1, s2) => {
+  const short = s1.length >= s2.length ? s2 : s1;
+  const long = s1.length >= s2.length ? s1 : s2;
+  let count = 0;
+  for (let i = 0; i < short.length; i++) {
+    if (short[i] === long[i]) {
+      count++;
+    }
+  }
+  return count / long.length;
+};
+
+const argMax = (xs, f) => {
+  let best = xs[0];
+  let bestScore = f(best);
+  for (let i = 1; i < xs.length; i++) {
+    const newBest = xs[i];
+    const newScore = f(newBest);
+    if (newScore > bestScore) {
+      bestScore = newScore;
+      best = newBest;
+    }
+  }
+  return best;
+}
 
 const tryDefine = async (word = '') => {
   console.log(`defining ${word}`);
-  const normalized = word.substr(0, 1).toUpperCase() +
-    word.substr(1).toLowerCase();
-  const wordNotPlural = normalized.replace(/s$/, '');
-  const wordNotPlural2 = normalized.replace(/es$/, '');
-  const wordNotGerund = normalized.replace(/ing$/, '');
-  const wordNotGerund2 = normalized.replace(/ing$/, 'e');
-  const wordNotPastTense = normalized.replace(/ed$/, '');
-  const wordNotPastTense2 = normalized.replace(/ed$/, 'e');
-  const wordNotAdjective = normalized.replace(/ly$/, '');
+  const capitalised = word.substr(0, 1).toUpperCase() + word.substr(1).toLowerCase();
 
-  console.log('checking regular dict');
-
-  for (const w of [
+  let words = [
     word,
-    normalized,
-    wordNotPlural,
-    wordNotPlural2,
-    wordNotGerund,
-    wordNotGerund2,
-    wordNotPastTense,
-    wordNotPastTense2,
-    wordNotAdjective]) {
-    const definition = definitions[w];
-    if (definition) {
-      console.log(`found definition ${JSON.stringify(definition)}`);
-      return definition;
-    }
+    capitalised,
+    capitalised.replace(/s$/, ''),
+    capitalised.replace(/es$/, ''),
+    capitalised.replace(/ing$/, ''),
+    capitalised.replace(/ing$/, 'e'),
+    capitalised.replace(/ed$/, ''),
+    capitalised.replace(/ed$/, 'e'),
+    capitalised.replace(/ly$/, ''),
+  ];
+
+  words = words.concat(words.map(w => w.toLowerCase()));
+
+  if (word.length <= 4) {
+    words = words.concat(words.map(w => w.toUpperCase()));
   }
 
-  console.log('checking technical dict');
+  words = Array.from(new Set([...words]));
 
-  const dictTechnical = await fs.readFile(join(__dirname, 'dict-technical.txt'),
-    {encoding: 'utf-8'});
-  for (const w of [
-    word,
-    normalized,
-    wordNotPlural,
-    wordNotPlural2,
-    wordNotGerund,
-    wordNotGerund2,
-    wordNotPastTense,
-    wordNotPastTense2,
-    wordNotAdjective]) {
-    const m = dictTechnical.match(
-      new RegExp(`^${w}\\n\\n\\t(.*?)\\n\\n^(?=\\S)`, 'ms'));
-    if (m) {
-      const definition = m[1];
-      console.log(`found definition ${definition}`);
-      return definition;
-    }
+  const res = await dynamoDB.batchGetItem({RequestItems: {Definitions: {Keys: words.map(w => ({word: {S: w}}))}}}).promise();
+  if (res.Responses.Definitions.length > 0) {
+    const definition = argMax(res.Responses.Definitions, d => cmp(word, d.word.S)).definition.S;
+    console.log(`found definition ${definition}`);
+    return definition;
   }
-
-  throw new Error('failed to find a definition', 404);
+  throw new Error(`failed to find a definition for "${word}"`);
 };
 
-exports.handler = async (event, context) => ({
-  statusCode: 200,
-  headers: {
+exports.handler = async (event, context) => {
+  const headers = {
     'Content-Type': 'text/plain',
-  },
-  body: await tryDefine(event.pathParameters.word),
-});
+  };
+  try {
+    return ({
+      statusCode: 200,
+      headers,
+      body: await tryDefine(event.pathParameters.word),
+    });
+  } catch (e) {
+    console.error(JSON.stringify(e));
+    return ({
+      statusCode: 404,
+      headers,
+      body: e.message,
+    });
+  }
+};

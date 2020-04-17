@@ -15,7 +15,7 @@ Globals:
       AllowHeaders:
         - 'Content-Type'
         - 'Accept'
-      AllowMethods: 
+      AllowMethods:
         - GET
         - POST
         - OPTIONS
@@ -96,6 +96,9 @@ Resources:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
     Properties:
       CodeUri: define/
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: Definitions
       Events:
         Define:
           Type: HttpApi # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
