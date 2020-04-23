@@ -3,6 +3,9 @@ default:
 
 Test:
   stage: test
+  variables:
+    AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+    AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
   script:
     - |
       apt update
@@ -24,6 +27,9 @@ Test:
 
 BuildAndDeploy:
   stage: deploy
+  variables:
+    AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID
+    AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY
   artifacts:
     name: "$CI_COMMIT_REF_NAME"
     paths:
