@@ -1,0 +1,41 @@
+default:
+  image: ubuntu:lastes
+
+Test:
+  script:
+    - |
+      for i in *; do
+        if [[ -f ./$i/tests/unit/app.test.js ]]; then
+          cd ./$i
+          npm install
+          npm test || exit 1
+          rm -r -f node_modules
+          cd ..
+        fi
+      done
+
+BuildAndDeploy:
+  artifacts:
+    name: "$CI_COMMIT_REF_NAME"
+    paths:
+      - .aws-sam/build
+  needs:
+    - Test
+  script:
+    - |
+      if [[ "$CI_COMMIT_REF_NAME" == develop ]]; then
+        apt update
+        apt install awscli
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
+        test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
+        test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+        test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
+        echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
+        brew tap aws/tap
+        brew install aws-sam-cli
+        aws configure set region eu-west-2
+        aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+        aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+        /home/homebrew/.homebrew/bin/sam build
+        /home/homebrew/.homebrew/bin/sam deploy
+      fi
