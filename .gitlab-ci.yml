@@ -14,7 +14,9 @@ Test:
       nvm use 12
       for i in *; do
         if [[ -f ./$i/tests/unit/app.test.js ]]; then
-          if [[ $i != define ]]; then
+          if [[ $i == define ]]; then
+            echo 'ok'
+          else
             cd ./$i
             npm install
             npm test || exit 1
