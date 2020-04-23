@@ -14,11 +14,13 @@ Test:
       nvm use 12
       for i in *; do
         if [[ -f ./$i/tests/unit/app.test.js ]]; then
-          cd ./$i
-          npm install
-          npm test || exit 1
-          rm -r -f node_modules
-          cd ..
+          if [[ ! $i == define ]]; then
+            cd ./$i
+            npm install
+            npm test || exit 1
+            rm -r -f node_modules
+            cd ..
+          done
         fi
       done
 
