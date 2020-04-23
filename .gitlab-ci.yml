@@ -22,7 +22,7 @@ Test:
             npm test || exit 1
             rm -r -f node_modules
             cd ..
-          done
+          fi
         fi
       done
 
