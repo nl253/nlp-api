@@ -1,5 +1,5 @@
 default:
-  image: ubuntu:lastes
+  image: ubuntu:lastest
 
 Test:
   stage: test
