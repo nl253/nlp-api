@@ -1,5 +1,11 @@
 const AWS = require('aws-sdk');
-AWS.config = { region: 'eu-west-2' };
+AWS.config = {
+  region: 'eu-west-2',
+  credentials: {
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  },
+};
 const dynamoDB = new AWS.DynamoDB();
 
 /**
@@ -31,11 +37,12 @@ const argMax = (xs, f) => {
     }
   }
   return best;
-}
+};
 
 const tryDefine = async (word = '') => {
   console.log(`defining ${word}`);
-  const capitalised = word.substr(0, 1).toUpperCase() + word.substr(1).toLowerCase();
+  const capitalised = word.substr(0, 1).toUpperCase() +
+    word.substr(1).toLowerCase();
 
   let words = [
     word,
@@ -57,9 +64,12 @@ const tryDefine = async (word = '') => {
 
   words = Array.from(new Set([...words]));
 
-  const res = await dynamoDB.batchGetItem({RequestItems: {Definitions: {Keys: words.map(w => ({word: {S: w}}))}}}).promise();
+  const res = await dynamoDB.batchGetItem(
+    {RequestItems: {Definitions: {Keys: words.map(w => ({word: {S: w}}))}}}).
+    promise();
   if (res.Responses.Definitions.length > 0) {
-    const definition = argMax(res.Responses.Definitions, d => cmp(word, d.word.S)).definition.S;
+    const definition = argMax(res.Responses.Definitions,
+      d => cmp(word, d.word.S)).definition.S;
     console.log(`found definition ${definition}`);
     return definition;
   }
