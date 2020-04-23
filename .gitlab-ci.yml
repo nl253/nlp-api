@@ -3,13 +3,10 @@ default:
 
 Test:
   stage: test
-  variables:
-    AWS_ACCESS_KEY_ID: "$AWS_ACCESS_KEY_ID"
-    AWS_SECRET_ACCESS_KEY: "$AWS_SECRET_ACCESS_KEY"
   script:
     - |
-      echo "$AWS_ACCESS_KEY_ID"
-      echo "$AWS_SECRET_ACCESS_KEY"
+      export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+      export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
       apt update
       apt install -y curl
       curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
@@ -29,9 +26,6 @@ Test:
 
 BuildAndDeploy:
   stage: deploy
-  variables:
-    AWS_ACCESS_KEY_ID: "$AWS_ACCESS_KEY_ID"
-    AWS_SECRET_ACCESS_KEY: "$AWS_SECRET_ACCESS_KEY"
   artifacts:
     name: "$CI_COMMIT_REF_NAME"
     paths:
@@ -41,6 +35,8 @@ BuildAndDeploy:
   script:
     - |
       if [[ "$CI_COMMIT_REF_NAME" == develop ]]; then
+        export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+        export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
         apt update
         apt install -y awscli
         sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
