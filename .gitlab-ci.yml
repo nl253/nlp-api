@@ -2,7 +2,7 @@ default:
   image: ubuntu:lastes
 
 Test:
-  stage: Test
+  stage: test
   script:
     - |
       for i in *; do
@@ -16,7 +16,7 @@ Test:
       done
 
 BuildAndDeploy:
-  stage: BuildAndDeploy
+  stage: deploy
   artifacts:
     name: "$CI_COMMIT_REF_NAME"
     paths:
