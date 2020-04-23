@@ -39,6 +39,7 @@ BuildAndDeploy:
         export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
         apt update
         apt install -y awscli
+        apt install -y curl
         sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
         test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
         test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
