@@ -8,6 +8,8 @@ Test:
     AWS_SECRET_ACCESS_KEY: "$AWS_SECRET_ACCESS_KEY"
   script:
     - |
+      echo "$AWS_ACCESS_KEY_ID"
+      echo "$AWS_SECRET_ACCESS_KEY"
       apt update
       apt install -y curl
       curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
