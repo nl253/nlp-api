@@ -3,10 +3,14 @@ default:
 
 Test:
   stage: test
+  only:
+    changes:
+      - '*/app.js'
+      - '*/event.json'
+      - '*/package.json'
+      - '*/tests/unit/*.test.js'
   script:
     - |
-      useradd -m mx
-      su - mx
       export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
       export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
       apt update
@@ -28,32 +32,24 @@ Test:
 
 BuildAndDeploy:
   stage: deploy
+  only:
+    refs:
+      - develop
+    changes:
+      - '*/app.js'
+      - '*/package.json'
+      - '*.json'
+      - '*.yml'
+      - '*.yaml'
   artifacts:
-    name: "$CI_COMMIT_REF_NAME"
     paths:
       - .aws-sam/build
   needs:
     - Test
+  before_script:
+    - pip3 install awscli --upgrade
+    - pip3 install aws-sam-cli --upgrade
   script:
-    - |
-      if [[ "$CI_COMMIT_REF_NAME" == develop ]]; then
-        useradd -m mx
-        su - mx
-        export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
-        export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
-        apt update
-        apt install -y awscli
-        apt install -y curl
-        sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
-        test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
-        test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-        test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
-        echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
-        brew tap aws/tap
-        brew install aws-sam-cli
-        aws configure set region eu-west-2
-        aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
-        aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
-        /home/homebrew/.homebrew/bin/sam build
-        /home/homebrew/.homebrew/bin/sam deploy
-      fi
+    - sam build
+    - sam package
+    - sam deploy
