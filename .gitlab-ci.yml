@@ -28,7 +28,6 @@ Test:
           cd ./$i
           npm install
           npm test || exit 1
-          rm -r -f node_modules
           cd ..
         fi
       done
@@ -42,9 +41,8 @@ BuildAndDeploy:
     changes:
       - '*/app.js'
       - '*/package.json'
-      - '*.json'
-      - '*.yml'
-      - '*.yaml'
+      - template.yaml
+      - samconfig.toml
   artifacts:
     paths:
       - .aws-sam/build
