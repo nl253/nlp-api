@@ -51,6 +51,14 @@ BuildAndDeploy:
     - pip3 install awscli --upgrade
     - pip3 install aws-sam-cli --upgrade
   script:
-    - sam build
-    - sam package
-    - sam deploy
+    - |
+      apt update
+      apt install -y curl
+      curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+      export NVM_DIR="$HOME/.nvm"
+      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+      nvm install 12
+      nvm use 12
+      sam build
+      sam package
+      sam deploy
