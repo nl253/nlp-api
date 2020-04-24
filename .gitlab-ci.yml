@@ -1,7 +1,6 @@
 default:
   image: ubuntu:latest
-
-Test:
+test:
   interruptible: true
   stage: test
   cache:
@@ -32,11 +31,13 @@ Test:
           cd ..
         fi
       done
-
-BuildAndDeploy:
+build:
   interruptible: true
-  stage: deploy
+  stage: build
   image: python:3.8
+  environment:
+    name: dev
+    url: https://ii34isjdti.execute-api.eu-west-2.amazonaws.com
   only:
     refs:
       - develop
@@ -51,7 +52,6 @@ BuildAndDeploy:
   before_script:
     - pip3 install awscli --upgrade
     - pip3 install aws-sam-cli --upgrade
-
   script:
     - |
       apt update
@@ -62,6 +62,24 @@ BuildAndDeploy:
       nvm install 12
       nvm use 12
       sam build
-      sam package --s3-prefix nlp-api-dev --s3-bucket codebuild-nl
-      sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
-
+deploy:
+  interruptible: true
+  stage: deploy
+  image: python:3.8
+  environment:
+    name: dev
+    url: https://ii34isjdti.execute-api.eu-west-2.amazonaws.com
+  only:
+    refs:
+      - develop
+    changes:
+      - '*/app.js'
+      - '*/package.json'
+      - template.yaml
+      - samconfig.toml
+  before_script:
+    - pip3 install awscli --upgrade
+    - pip3 install aws-sam-cli --upgrade
+  script:
+    - sam package --s3-prefix nlp-api-dev --s3-bucket codebuild-nl
+    - sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
