@@ -1,0 +1,217 @@
+{
+	"info": {
+		"_postman_id": "9914fb15-9631-4ea8-9870-92ebfb3cd78b",
+		"name": "NLP API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Tokenize",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"text\": \"Turing played a crucial role in cracking intercepted coded messages that enabled the Allies to defeat the Nazis in many crucial engagements, including the Battle of the Atlantic, and in so doing helped win the war.[12][13] Due to the problems of counterfactual history, it is hard to estimate the precise effect Ultra intelligence had on the war,[14] but at the upper end it has been estimated that this work shortened the war in Europe by more than two years and saved over 14 million lives.[12] After the war Turing worked at the National Physical Laboratory, where he designed the Automatic Computing Engine. The Automatic Computing Engine was one of the first designs for a stored-program computer. In 1948 Turing joined Max Newman's Computing Machine Laboratory, at the Victoria University of Manchester, where he helped develop the Manchester computers[15] and became interested in mathematical biology. He wrote a paper on the chemical basis of morphogenesis[1] and predicted oscillating chemical reactions such as the Belousov–Zhabotinsky reaction, first observed in the 1960s. Turing was prosecuted in 1952 for homosexual acts; the Labouchere Amendment of 1885 had mandated that \\\"gross indecency\\\" was a criminal offence in the UK. He accepted chemical castration treatment, with DES, as an alternative to prison. Turing died in 1954, 16 days before his 42nd birthday, from cyanide poisoning. An inquest determined his death as a suicide, but it has been noted that the known evidence is also consistent with accidental poisoning.\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUri}}/tokenize",
+					"host": [
+						"{{baseUri}}"
+					],
+					"path": [
+						"tokenize"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Topics",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "Turing played a crucial role in cracking intercepted coded messages that enabled the Allies to defeat the Nazis in many crucial engagements, including the Battle of the Atlantic, and in so doing helped win the war.[12][13] Due to the problems of counterfactual history, it is hard to estimate the precise effect Ultra intelligence had on the war,[14] but at the upper end it has been estimated that this work shortened the war in Europe by more than two years and saved over 14 million lives.[12] After the war Turing worked at the National Physical Laboratory, where he designed the Automatic Computing Engine. The Automatic Computing Engine was one of the first designs for a stored-program computer. In 1948 Turing joined Max Newman's Computing Machine Laboratory, at the Victoria University of Manchester, where he helped develop the Manchester computers[15] and became interested in mathematical biology. He wrote a paper on the chemical basis of morphogenesis[1] and predicted oscillating chemical reactions such as the Belousov–Zhabotinsky reaction, first observed in the 1960s. Turing was prosecuted in 1952 for homosexual acts; the Labouchere Amendment of 1885 had mandated that \"gross indecency\" was a criminal offence in the UK. He accepted chemical castration treatment, with DES, as an alternative to prison. Turing died in 1954, 16 days before his 42nd birthday, from cyanide poisoning. An inquest determined his death as a suicide, but it has been noted that the known evidence is also consistent with accidental poisoning.",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUri}}/topics",
+					"host": [
+						"{{baseUri}}"
+					],
+					"path": [
+						"topics"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Terms",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "Turing played a crucial role in cracking intercepted coded messages that enabled the Allies to defeat the Nazis in many crucial engagements, including the Battle of the Atlantic, and in so doing helped win the war.[12][13] Due to the problems of counterfactual history, it is hard to estimate the precise effect Ultra intelligence had on the war,[14] but at the upper end it has been estimated that this work shortened the war in Europe by more than two years and saved over 14 million lives.[12] After the war Turing worked at the National Physical Laboratory, where he designed the Automatic Computing Engine. The Automatic Computing Engine was one of the first designs for a stored-program computer. In 1948 Turing joined Max Newman's Computing Machine Laboratory, at the Victoria University of Manchester, where he helped develop the Manchester computers[15] and became interested in mathematical biology. He wrote a paper on the chemical basis of morphogenesis[1] and predicted oscillating chemical reactions such as the Belousov–Zhabotinsky reaction, first observed in the 1960s. Turing was prosecuted in 1952 for homosexual acts; the Labouchere Amendment of 1885 had mandated that \"gross indecency\" was a criminal offence in the UK. He accepted chemical castration treatment, with DES, as an alternative to prison. Turing died in 1954, 16 days before his 42nd birthday, from cyanide poisoning. An inquest determined his death as a suicide, but it has been noted that the known evidence is also consistent with accidental poisoning.",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUri}}/terms",
+					"host": [
+						"{{baseUri}}"
+					],
+					"path": [
+						"terms"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Places",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "Turing played a crucial role in cracking intercepted coded messages that enabled the Allies to defeat the Nazis in many crucial engagements, including the Battle of the Atlantic, and in so doing helped win the war.[12][13] Due to the problems of counterfactual history, it is hard to estimate the precise effect Ultra intelligence had on the war,[14] but at the upper end it has been estimated that this work shortened the war in Europe by more than two years and saved over 14 million lives.[12] After the war Turing worked at the National Physical Laboratory, where he designed the Automatic Computing Engine. The Automatic Computing Engine was one of the first designs for a stored-program computer. In 1948 Turing joined Max Newman's Computing Machine Laboratory, at the Victoria University of Manchester, where he helped develop the Manchester computers[15] and became interested in mathematical biology. He wrote a paper on the chemical basis of morphogenesis[1] and predicted oscillating chemical reactions such as the Belousov–Zhabotinsky reaction, first observed in the 1960s. Turing was prosecuted in 1952 for homosexual acts; the Labouchere Amendment of 1885 had mandated that \"gross indecency\" was a criminal offence in the UK. He accepted chemical castration treatment, with DES, as an alternative to prison. Turing died in 1954, 16 days before his 42nd birthday, from cyanide poisoning. An inquest determined his death as a suicide, but it has been noted that the known evidence is also consistent with accidental poisoning.",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUri}}/places",
+					"host": [
+						"{{baseUri}}"
+					],
+					"path": [
+						"places"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "People",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "Turing played a crucial role in cracking intercepted coded messages that enabled the Allies to defeat the Nazis in many crucial engagements, including the Battle of the Atlantic, and in so doing helped win the war.[12][13] Due to the problems of counterfactual history, it is hard to estimate the precise effect Ultra intelligence had on the war,[14] but at the upper end it has been estimated that this work shortened the war in Europe by more than two years and saved over 14 million lives.[12] After the war Turing worked at the National Physical Laboratory, where he designed the Automatic Computing Engine. The Automatic Computing Engine was one of the first designs for a stored-program computer. In 1948 Turing joined Max Newman's Computing Machine Laboratory, at the Victoria University of Manchester, where he helped develop the Manchester computers[15] and became interested in mathematical biology. He wrote a paper on the chemical basis of morphogenesis[1] and predicted oscillating chemical reactions such as the Belousov–Zhabotinsky reaction, first observed in the 1960s. Turing was prosecuted in 1952 for homosexual acts; the Labouchere Amendment of 1885 had mandated that \"gross indecency\" was a criminal offence in the UK. He accepted chemical castration treatment, with DES, as an alternative to prison. Turing died in 1954, 16 days before his 42nd birthday, from cyanide poisoning. An inquest determined his death as a suicide, but it has been noted that the known evidence is also consistent with accidental poisoning.",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUri}}/people",
+					"host": [
+						"{{baseUri}}"
+					],
+					"path": [
+						"people"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Organizations",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "Turing played a crucial role in cracking intercepted coded messages that enabled the Allies to defeat the Nazis in many crucial engagements, including the Battle of the Atlantic, and in so doing helped win the war.[12][13] Due to the problems of counterfactual history, it is hard to estimate the precise effect Ultra intelligence had on the war,[14] but at the upper end it has been estimated that this work shortened the war in Europe by more than two years and saved over 14 million lives.[12] After the war Turing worked at the National Physical Laboratory, where he designed the Automatic Computing Engine. The Automatic Computing Engine was one of the first designs for a stored-program computer. In 1948 Turing joined Max Newman's Computing Machine Laboratory, at the Victoria University of Manchester, where he helped develop the Manchester computers[15] and became interested in mathematical biology. He wrote a paper on the chemical basis of morphogenesis[1] and predicted oscillating chemical reactions such as the Belousov–Zhabotinsky reaction, first observed in the 1960s. Turing was prosecuted in 1952 for homosexual acts; the Labouchere Amendment of 1885 had mandated that \"gross indecency\" was a criminal offence in the UK. He accepted chemical castration treatment, with DES, as an alternative to prison. Turing died in 1954, 16 days before his 42nd birthday, from cyanide poisoning. An inquest determined his death as a suicide, but it has been noted that the known evidence is also consistent with accidental poisoning.",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUri}}/organizations",
+					"host": [
+						"{{baseUri}}"
+					],
+					"path": [
+						"organizations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sentiment",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"tokens\": [\n    \"Turing\",\n    \"played\",\n    \"a\",\n    \"crucial\",\n    \"role\",\n    \"in\",\n    \"cracking\",\n    \"intercepted\",\n    \"coded\",\n    \"messages\",\n    \"that\",\n    \"enabled\",\n    \"the\",\n    \"Allies\",\n    \"to\",\n    \"defeat\",\n    \"the\",\n    \"Nazis\",\n    \"in\",\n    \"many\",\n    \"crucial\",\n    \"engagements\",\n    \"including\",\n    \"the\",\n    \"Battle\",\n    \"of\",\n    \"the\",\n    \"Atlantic\",\n    \"and\",\n    \"in\",\n    \"so\",\n    \"doing\",\n    \"helped\",\n    \"win\",\n    \"the\",\n    \"war\",\n    \"12\",\n    \"13\",\n    \"Due\",\n    \"to\",\n    \"the\",\n    \"problems\",\n    \"of\",\n    \"counterfactual\",\n    \"history\",\n    \"it\",\n    \"is\",\n    \"hard\",\n    \"to\",\n    \"estimate\",\n    \"the\",\n    \"precise\",\n    \"effect\",\n    \"Ultra\",\n    \"intelligence\",\n    \"had\",\n    \"on\",\n    \"the\",\n    \"war\",\n    \"14\",\n    \"but\",\n    \"at\",\n    \"the\",\n    \"upper\",\n    \"end\",\n    \"it\",\n    \"has\",\n    \"been\",\n    \"estimated\",\n    \"that\",\n    \"this\",\n    \"work\",\n    \"shortened\",\n    \"the\",\n    \"war\",\n    \"in\",\n    \"Europe\",\n    \"by\",\n    \"more\",\n    \"than\",\n    \"two\",\n    \"years\",\n    \"and\",\n    \"saved\",\n    \"over\",\n    \"14\",\n    \"million\",\n    \"lives\",\n    \"12\",\n    \"After\",\n    \"the\",\n    \"war\",\n    \"Turing\",\n    \"worked\",\n    \"at\",\n    \"the\",\n    \"National\",\n    \"Physical\",\n    \"Laboratory\",\n    \"where\",\n    \"he\",\n    \"designed\",\n    \"the\",\n    \"Automatic\",\n    \"Computing\",\n    \"Engine\",\n    \"The\",\n    \"Automatic\",\n    \"Computing\",\n    \"Engine\",\n    \"was\",\n    \"one\",\n    \"of\",\n    \"the\",\n    \"first\",\n    \"designs\",\n    \"for\",\n    \"a\",\n    \"stored\",\n    \"program\",\n    \"computer\",\n    \"In\",\n    \"1948\",\n    \"Turing\",\n    \"joined\",\n    \"Max\",\n    \"Newman\",\n    \"s\",\n    \"Computing\",\n    \"Machine\",\n    \"Laboratory\",\n    \"at\",\n    \"the\",\n    \"Victoria\",\n    \"University\",\n    \"of\",\n    \"Manchester\",\n    \"where\",\n    \"he\",\n    \"helped\",\n    \"develop\",\n    \"the\",\n    \"Manchester\",\n    \"computers\",\n    \"15\",\n    \"and\",\n    \"became\",\n    \"interested\",\n    \"in\",\n    \"mathematical\",\n    \"biology\",\n    \"He\",\n    \"wrote\",\n    \"a\",\n    \"paper\",\n    \"on\",\n    \"the\",\n    \"chemical\",\n    \"basis\",\n    \"of\",\n    \"morphogenesis\",\n    \"1\",\n    \"and\",\n    \"predicted\",\n    \"oscillating\",\n    \"chemical\",\n    \"reactions\",\n    \"such\",\n    \"as\",\n    \"the\",\n    \"Belousov\",\n    \"Zhabotinsky\",\n    \"reaction\",\n    \"first\",\n    \"observed\",\n    \"in\",\n    \"the\",\n    \"1960s\",\n    \"Turing\",\n    \"was\",\n    \"prosecuted\",\n    \"in\",\n    \"1952\",\n    \"for\",\n    \"homosexual\",\n    \"acts\",\n    \"the\",\n    \"Labouchere\",\n    \"Amendment\",\n    \"of\",\n    \"1885\",\n    \"had\",\n    \"mandated\",\n    \"that\",\n    \"gross\",\n    \"indecency\",\n    \"was\",\n    \"a\",\n    \"criminal\",\n    \"offence\",\n    \"in\",\n    \"the\",\n    \"UK\",\n    \"He\",\n    \"accepted\",\n    \"chemical\",\n    \"castration\",\n    \"treatment\",\n    \"with\",\n    \"DES\",\n    \"as\",\n    \"an\",\n    \"alternative\",\n    \"to\",\n    \"prison\",\n    \"Turing\",\n    \"died\",\n    \"in\",\n    \"1954\",\n    \"16\",\n    \"days\",\n    \"before\",\n    \"his\",\n    \"42nd\",\n    \"birthday\",\n    \"from\",\n    \"cyanide\",\n    \"poisoning\",\n    \"An\",\n    \"inquest\",\n    \"determined\",\n    \"his\",\n    \"death\",\n    \"as\",\n    \"a\",\n    \"suicide\",\n    \"but\",\n    \"it\",\n    \"has\",\n    \"been\",\n    \"noted\",\n    \"that\",\n    \"the\",\n    \"known\",\n    \"evidence\",\n    \"is\",\n    \"also\",\n    \"consistent\",\n    \"with\",\n    \"accidental\",\n    \"poisoning\"\n]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUri}}/sentiment",
+					"host": [
+						"{{baseUri}}"
+					],
+					"path": [
+						"sentiment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Define",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUri}}/define/:word",
+					"host": [
+						"{{baseUri}}"
+					],
+					"path": [
+						"define",
+						":word"
+					],
+					"variable": [
+						{
+							"key": "word",
+							"value": "cat"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [],
+	"protocolProfileBehavior": {}
+}

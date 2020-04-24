@@ -4,6 +4,7 @@ stages:
   - test
   - build
   - deploy
+  - test-integration
 test:
   interruptible: true
   stage: test
@@ -95,3 +96,31 @@ deploy:
   script:
     - sam package --s3-prefix nlp-api-dev --s3-bucket codebuild-nl
     - sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
+test-integration:
+  interruptible: true
+  stage: test-integration
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - node_modules
+  only:
+    changes:
+      - '*/app.js'
+      - '*/package.json'
+      - '.gitlab-ci.yml'
+      - template.yaml
+      - package.json
+      - postman.json
+      - dev.postman_environment.json
+  script:
+    - |
+      apt update
+      apt install -y curl
+      curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+      export NVM_DIR="$HOME/.nvm"
+      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+      nvm install 12
+      nvm use 12
+      npm install
+      npx newman run -e dev.postman_environment.json postman.json

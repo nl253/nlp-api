@@ -1,0 +1,13 @@
+{
+  "name": "nlp-api",
+  "version": "1.0.0",
+  "devDependencies": {
+    "newman": "^5.0.0"
+  },
+  "scripts": {
+    "test": "newman run -e local.postman_environment.json postman.json",
+    "test:dev": "newman run -e dev.postman_environment.json postman.json",
+    "test:prd": "newman run -e prd.postman_environment.json postman.json"
+  },
+  "dependencies": {}
+}
