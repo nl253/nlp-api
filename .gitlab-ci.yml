@@ -53,6 +53,7 @@ build:
       - samconfig.toml
       - '.gitlab-ci.yml'
   artifacts:
+    expire_in: 60 days
     paths:
       - .aws-sam/build/*
   before_script:
