@@ -1,5 +1,9 @@
 default:
   image: ubuntu:latest
+stages:
+  - test
+  - build
+  - deploy
 test:
   interruptible: true
   stage: test
