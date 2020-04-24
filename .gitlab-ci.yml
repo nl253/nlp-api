@@ -53,9 +53,10 @@ build:
       - samconfig.toml
       - '.gitlab-ci.yml'
   artifacts:
+    expose_as: artifact
     expire_in: 60 days
     paths:
-      - .aws-sam/build/*
+      - .aws-sam/build
   before_script:
     - pip3 install awscli --upgrade
     - pip3 install aws-sam-cli --upgrade
