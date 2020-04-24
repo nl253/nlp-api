@@ -12,6 +12,7 @@ test:
       - '*/event.json'
       - '*/package.json'
       - '*/tests/unit/*.test.js'
+      - '.gitlab-ci.yml'
   script:
     - |
       export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
@@ -46,6 +47,7 @@ build:
       - '*/package.json'
       - template.yaml
       - samconfig.toml
+      - '.gitlab-ci.yml'
   artifacts:
     paths:
       - .aws-sam/build
@@ -77,6 +79,7 @@ deploy:
       - '*/package.json'
       - template.yaml
       - samconfig.toml
+      - '.gitlab-ci.yml'
   before_script:
     - pip3 install awscli --upgrade
     - pip3 install aws-sam-cli --upgrade
