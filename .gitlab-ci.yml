@@ -48,8 +48,6 @@ BuildAndDeploy:
   artifacts:
     paths:
       - .aws-sam/build
-  needs:
-    - Test
   before_script:
     - pip3 install awscli --upgrade
     - pip3 install aws-sam-cli --upgrade
