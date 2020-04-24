@@ -32,6 +32,7 @@ Test:
 
 BuildAndDeploy:
   stage: deploy
+  image: python:3.8
   only:
     refs:
       - develop
