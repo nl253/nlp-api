@@ -72,6 +72,7 @@ build:
       nvm install 12
       nvm use 12
       sam build
+      rm -r -f .aws-sam/build/*/tests .aws-sam/build/*/event.json
 deploy:
   interruptible: true
   stage: deploy
