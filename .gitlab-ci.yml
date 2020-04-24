@@ -64,5 +64,5 @@ BuildAndDeploy:
       nvm install 12
       nvm use 12
       sam build
-      sam package
+      sam package --s3-prefix nlp-api-dev --s3-bucket codebuild-nl
       sam deploy
