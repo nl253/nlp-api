@@ -2,6 +2,7 @@ default:
   image: ubuntu:latest
 
 Test:
+  interruptible: true
   stage: test
   cache:
     paths:
@@ -33,6 +34,7 @@ Test:
       done
 
 BuildAndDeploy:
+  interruptible: true
   stage: deploy
   image: python:3.8
   only:
