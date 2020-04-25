@@ -123,4 +123,5 @@ test-integration:
       nvm install 12
       nvm use 12
       npm install
+      node ./scripts/postman-tests-inject.js
       npx newman run -e dev.postman_environment.json postman.json

@@ -11,11 +11,12 @@
         "id": "c8c4e251-5965-4564-bc5e-a2ea03acbacc",
         "type": "text/javascript",
         "exec": [
-          "pm.test(\"Status test\", () => pm.response.to.have.status(200));",
+          "pm.test(\"status test\", () => pm.response.to.have.status(200));",
           "pm.test(\"response should be okay to process\", () => {",
           "  pm.response.to.not.be.error;",
           "  pm.response.to.be.ok;",
-          "});"
+          "});",
+          ""
         ]
       }
     }
