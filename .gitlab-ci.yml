@@ -3,7 +3,8 @@ default:
 stages:
   - test
   - build
-  - deploy
+  - deploy-dev
+  - deploy-prd
   - test-integration
 test:
   interruptible: true
@@ -49,6 +50,7 @@ build:
   only:
     refs:
       - develop
+      - master
     changes:
       - '*/app.js'
       - '*/package.json'
@@ -74,9 +76,9 @@ build:
       nvm use 12
       sam build
       rm -r -f .aws-sam/build/*/tests .aws-sam/build/*/event.json
-deploy:
+deploy-dev:
   interruptible: true
-  stage: deploy
+  stage: deploy-dev
   image: python:3.8
   environment:
     name: dev
@@ -96,6 +98,28 @@ deploy:
   script:
     - sam package --s3-prefix nlp-api-dev --s3-bucket codebuild-nl
     - sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
+deploy-prd:
+  interruptible: true
+  stage: deploy-prd
+  image: python:3.8
+  environment:
+    name: prd
+    url: https://ms8e4wi4c4.execute-api.eu-west-2.amazonaws.com
+  only:
+    refs:
+      - master
+    changes:
+      - '*/app.js'
+      - '*/package.json'
+      - template.yaml
+      - samconfig.toml
+      - '.gitlab-ci.yml'
+  before_script:
+    - pip3 install awscli --upgrade
+    - pip3 install aws-sam-cli --upgrade
+  script:
+    - sam package --s3-prefix nlp-api-dev --s3-bucket codebuild-nl
+    - sam deploy --stack-name nlp-api --s3-prefix nlp-api --no-confirm-changeset --no-fail-on-empty-changeset
 test-integration:
   interruptible: true
   stage: test-integration
@@ -113,7 +137,7 @@ test-integration:
       - package.json
       - postman.json
       - postman-tests.js
-      - dev.postman_environment.json
+      - '*.postman_environment.json'
   script:
     - |
       apt update
@@ -125,4 +149,8 @@ test-integration:
       nvm use 12
       npm install
       node ./scripts/postman-tests-inject.js
-      npx newman run -e dev.postman_environment.json postman.json
+      if [[ "$CI_COMMIT_REF_NAME" == master ]]; then
+        npx newman run -e prd.postman_environment.json postman.json
+      else
+        npx newman run -e dev.postman_environment.json postman.json
+      fi
