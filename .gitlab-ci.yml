@@ -49,6 +49,7 @@ build:
     name: dev
     url: https://ii34isjdti.execute-api.eu-west-2.amazonaws.com
   cache:
+    policy: pull
     paths:
       - "$HOME/.nvm"
   only:
