@@ -1,4 +1,4 @@
-const responseTimeMS = 5000;
+const responseTimeMS = 8000;
 
 pm.test("response should return status 200 (OK)", () => pm.response.to.be.success);
 

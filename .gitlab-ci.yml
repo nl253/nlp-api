@@ -14,6 +14,7 @@ test:
     policy: pull
     paths:
       - '*/node_modules'
+      - "$HOME/.nvm"
   only:
     changes:
       - '*/app.js'
@@ -47,6 +48,9 @@ build:
   environment:
     name: dev
     url: https://ii34isjdti.execute-api.eu-west-2.amazonaws.com
+  cache:
+    paths:
+      - "$HOME/.nvm"
   only:
     refs:
       - develop
@@ -128,6 +132,7 @@ test-integration:
     policy: pull
     paths:
       - node_modules
+      - "$HOME/.nvm"
   only:
     changes:
       - '*/app.js'
