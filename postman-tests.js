@@ -9,7 +9,7 @@ pm.test("response should be not be error", () => pm.response.to.not.be.error);
 pm.test("response should be not be error", () => pm.response.to.not.be.error);
 
 
-if (pm.request.url.path.join('/').endsWith('/define')) {
+if (pm.request.url.path.join('/').indexOf('define') >= 0) {
   pm.test('response should have application/json content-type headers set', () => {
     return pm.response.to.have.header('Content-Type', 'text/plain');
   });
@@ -29,5 +29,5 @@ pm.test(`response time is less than ${responseTimeMS}ms`, () => {
 });
 
 pm.test("response should not be empty", () => {
-  return expect(pm.response.text()).to.not.be.empty;
+  return pm.expect(pm.response.text()).to.not.be.empty;
 });
