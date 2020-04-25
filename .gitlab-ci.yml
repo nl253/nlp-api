@@ -66,7 +66,8 @@ build:
     refs:
       - develop
       - master
-    changes: *file_triggers
+    changes:
+      - *file_triggers
   artifacts:
     expose_as: artifact
     expire_in: 60 days
@@ -89,7 +90,8 @@ deploy-dev:
   only:
     refs:
       - develop
-    changes: *file_triggers
+    changes:
+      - *file_triggers
   before_script:
     - pip3 install awscli --upgrade
     - pip3 install aws-sam-cli --upgrade
@@ -106,7 +108,8 @@ deploy-prd:
   only:
     refs:
       - master
-    changes: *file_triggers
+    changes:
+      - *file_triggers
   before_script:
     - pip3 install awscli --upgrade
     - pip3 install aws-sam-cli --upgrade
