@@ -1,5 +1,22 @@
 default:
   image: ubuntu:latest
+
+.file_triggers: &file_triggers
+  - '*/app.js'
+  - '*/package.json'
+  - '.gitlab-ci.yml'
+  - template.yaml
+  - samconfig.toml
+
+.setup_node: &setup_node
+  - apt update
+  - apt install -y curl
+  - curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+  - export NVM_DIR="$HOME/.nvm"
+  - '[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"'
+  - nvm install 12
+  - nvm use 12
+
 stages:
   - test
   - build
@@ -17,22 +34,15 @@ test:
       - "$HOME/.nvm"
   only:
     changes:
-      - '*/app.js'
+      - *file_triggers
       - '*/event.json'
-      - '*/package.json'
       - '*/tests/unit/*.test.js'
-      - '.gitlab-ci.yml'
   script:
+    - *setup_node
+    - export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
+    - export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
+    - export AWS_DEFAULT_REGION=$AWS_DEFAULT_REGION
     - |
-      export AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID
-      export AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY
-      apt update
-      apt install -y curl
-      curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
-      export NVM_DIR="$HOME/.nvm"
-      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-      nvm install 12
-      nvm use 12
       for i in *; do
         if [[ -f ./$i/tests/unit/app.test.js ]]; then
           cd ./$i
@@ -56,12 +66,7 @@ build:
     refs:
       - develop
       - master
-    changes:
-      - '*/app.js'
-      - '*/package.json'
-      - template.yaml
-      - samconfig.toml
-      - '.gitlab-ci.yml'
+    changes: *file_triggers
   artifacts:
     expose_as: artifact
     expire_in: 60 days
@@ -71,16 +76,9 @@ build:
     - pip3 install awscli --upgrade
     - pip3 install aws-sam-cli --upgrade
   script:
-    - |
-      apt update
-      apt install -y curl
-      curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
-      export NVM_DIR="$HOME/.nvm"
-      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-      nvm install 12
-      nvm use 12
-      sam build
-      rm -r -f .aws-sam/build/*/tests .aws-sam/build/*/event.json
+    - *setup_node
+    - sam build
+    - rm -r -f .aws-sam/build/*/tests .aws-sam/build/*/event.json
 deploy-dev:
   interruptible: true
   stage: deploy-dev
@@ -91,12 +89,7 @@ deploy-dev:
   only:
     refs:
       - develop
-    changes:
-      - '*/app.js'
-      - '*/package.json'
-      - template.yaml
-      - samconfig.toml
-      - '.gitlab-ci.yml'
+    changes: *file_triggers
   before_script:
     - pip3 install awscli --upgrade
     - pip3 install aws-sam-cli --upgrade
@@ -113,12 +106,7 @@ deploy-prd:
   only:
     refs:
       - master
-    changes:
-      - '*/app.js'
-      - '*/package.json'
-      - template.yaml
-      - samconfig.toml
-      - '.gitlab-ci.yml'
+    changes: *file_triggers
   before_script:
     - pip3 install awscli --upgrade
     - pip3 install aws-sam-cli --upgrade
@@ -136,25 +124,16 @@ test-integration:
       - "$HOME/.nvm"
   only:
     changes:
-      - '*/app.js'
-      - '*/package.json'
-      - '.gitlab-ci.yml'
-      - template.yaml
+      - *file_triggers
       - package.json
       - postman.json
       - postman-tests.js
       - '*.postman_environment.json'
   script:
+    - *setup_node
+    - npm install
+    - node ./scripts/postman-tests-inject.js
     - |
-      apt update
-      apt install -y curl
-      curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
-      export NVM_DIR="$HOME/.nvm"
-      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-      nvm install 12
-      nvm use 12
-      npm install
-      node ./scripts/postman-tests-inject.js
       if [[ "$CI_COMMIT_REF_NAME" == master ]]; then
         npx newman run -e prd.postman_environment.json postman.json
       else
