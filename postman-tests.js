@@ -1,4 +1,4 @@
-const responseTimeMS = 300;
+const responseTimeMS = 5000;
 
 pm.test("response should return status 200 (OK)", () => pm.response.to.be.success);
 
@@ -21,11 +21,7 @@ if (pm.request.url.path.join('/').indexOf('define') >= 0) {
 }
 
 pm.test(`response time is less than ${responseTimeMS}ms`, () => {
-  try {
-    pm.expect(pm.response.responseTime).to.be.below(responseTimeMS);
-  } catch (e) {
-    pm.expect(pm.response.responseTime).to.be.below(responseTimeMS);
-  }
+  pm.expect(pm.response.responseTime).to.be.below(responseTimeMS);
 });
 
 pm.test("response should not be empty", () => {
