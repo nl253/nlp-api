@@ -9,7 +9,7 @@ pm.test("response should be not be error", () => pm.response.to.not.be.error);
 pm.test("response should be not be error", () => pm.response.to.not.be.error);
 
 
-if (pm.request.url.endsWith('/define')) {
+if (pm.request.url.path.endsWith('/define')) {
   pm.test('response should have application/json content-type headers set', () => {
     return pm.response.to.have.header('Content-Type', 'text/plain');
   });
