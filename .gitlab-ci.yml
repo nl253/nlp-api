@@ -112,6 +112,7 @@ test-integration:
       - template.yaml
       - package.json
       - postman.json
+      - postman-tests.js
       - dev.postman_environment.json
   script:
     - |
